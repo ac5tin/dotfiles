@@ -1,1 +1,13 @@
-{"rust-analyzer.updates.channel":"nightly"}
+{
+    "rust-analyzer.updates.channel":"nightly",
+    "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+    "rust-analyzer.procMacro.enable": false,
+    "languageserver": {
+      "golang": {
+        "command": "gopls",
+        "rootPatterns": ["go.mod"],
+        "disableWorkspaceFolders": true,
+        "filetypes": ["go"]
+      }
+    }
+}

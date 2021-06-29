@@ -21,10 +21,14 @@ colorscheme onedark
 "set guifont=Fira\ Code:h10
 "set guifont=monofur\ for\ Powerline:h12
 "set guifont=JuliaMono:h10:w1
-set guifont=Cascadia\ Code:h10
+set guifont=FantasqueSansMono\ Nerd\ Font\ Mono:h12
 
 set encoding=utf-8
 set cursorline
+
+" fix syntax highlight in big file
+set redrawtime=10000
+autocmd BufEnter * :syntax sync fromstart
 
 " indentation
 filetype plugin indent on
@@ -286,3 +290,7 @@ function! Wipeout()
     execute 'tabnext' l:currentTab
   endtry
 endfunction
+
+" italic in tmux
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
