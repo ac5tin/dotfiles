@@ -281,4 +281,6 @@ c.fonts.statusbar = '8pt monospace'
 
 # Bindings for normal mode
 config.bind('M', 'hint links spawn mpv {hint-url}')
+config.bind('j', 'scroll-px 0 20')
+config.bind('k', 'scroll-px 0 -20')
 config.bind('m', 'spawn mpv {url}')
