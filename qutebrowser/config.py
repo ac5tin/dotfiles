@@ -16,7 +16,12 @@ config.load_autoconfig(False)
 # Aliases for commands. The keys of the given dictionary are the
 # aliases, while the values are the commands they map to.
 # Type: Dict
-c.aliases = {'w': 'session-save', 'q': 'quit', 'wq': 'quit --save', 'yt': 'open https://youtube.com'}
+c.aliases = {
+    "w": "session-save",
+    "q": "quit",
+    "wq": "quit --save",
+    "yt": "open https://youtube.com",
+}
 
 # Turn on Qt HighDPI scaling. This is equivalent to setting
 # QT_AUTO_SCREEN_SCALE_FACTOR=1 or QT_ENABLE_HIGHDPI_SCALING=1 (Qt >=
@@ -48,7 +53,7 @@ c.qt.highdpi = True
 #   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
 #   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
 #   - never: Don't accept cookies at all.
-config.set('content.cookies.accept', 'all', 'chrome-devtools://*')
+config.set("content.cookies.accept", "all", "chrome-devtools://*")
 
 # Which cookies to accept. With QtWebEngine, this setting also controls
 # other features with tracking capabilities similar to those of cookies;
@@ -72,17 +77,17 @@ config.set('content.cookies.accept', 'all', 'chrome-devtools://*')
 #   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
 #   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
 #   - never: Don't accept cookies at all.
-config.set('content.cookies.accept', 'all', 'devtools://*')
+config.set("content.cookies.accept", "all", "devtools://*")
 
 # Value to send in the `Accept-Language` header. Note that the value
 # read from JavaScript is always the global value.
 # Type: String
-c.content.headers.accept_language = 'en-GB,en'
+c.content.headers.accept_language = "en-GB,en"
 
 # Value to send in the `Accept-Language` header. Note that the value
 # read from JavaScript is always the global value.
 # Type: String
-config.set('content.headers.accept_language', '', 'https://matchmaker.krunker.io/*')
+config.set("content.headers.accept_language", "", "https://matchmaker.krunker.io/*")
 
 # User agent to send.  The following placeholders are defined:  *
 # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
@@ -98,7 +103,11 @@ config.set('content.headers.accept_language', '', 'https://matchmaker.krunker.io
 # between 5.12 and 5.14 (inclusive), changing the value exposed to
 # JavaScript requires a restart.
 # Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}', 'https://web.whatsapp.com/')
+config.set(
+    "content.headers.user_agent",
+    "Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}",
+    "https://web.whatsapp.com/",
+)
 
 # User agent to send.  The following placeholders are defined:  *
 # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
@@ -114,7 +123,11 @@ config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/{w
 # between 5.12 and 5.14 (inclusive), changing the value exposed to
 # JavaScript requires a restart.
 # Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko/20100101 Firefox/90.0', 'https://accounts.google.com/*')
+config.set(
+    "content.headers.user_agent",
+    "Mozilla/5.0 ({os_info}; rv:90.0) Gecko/20100101 Firefox/90.0",
+    "https://accounts.google.com/*",
+)
 
 # User agent to send.  The following placeholders are defined:  *
 # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
@@ -130,31 +143,35 @@ config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko
 # between 5.12 and 5.14 (inclusive), changing the value exposed to
 # JavaScript requires a restart.
 # Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36', 'https://*.slack.com/*')
+config.set(
+    "content.headers.user_agent",
+    "Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36",
+    "https://*.slack.com/*",
+)
 
 # Load images automatically in web pages.
 # Type: Bool
-config.set('content.images', True, 'chrome-devtools://*')
+config.set("content.images", True, "chrome-devtools://*")
 
 # Load images automatically in web pages.
 # Type: Bool
-config.set('content.images', True, 'devtools://*')
+config.set("content.images", True, "devtools://*")
 
 # Enable JavaScript.
 # Type: Bool
-config.set('content.javascript.enabled', True, 'chrome-devtools://*')
+config.set("content.javascript.enabled", True, "chrome-devtools://*")
 
 # Enable JavaScript.
 # Type: Bool
-config.set('content.javascript.enabled', True, 'devtools://*')
+config.set("content.javascript.enabled", True, "devtools://*")
 
 # Enable JavaScript.
 # Type: Bool
-config.set('content.javascript.enabled', True, 'chrome://*/*')
+config.set("content.javascript.enabled", True, "chrome://*/*")
 
 # Enable JavaScript.
 # Type: Bool
-config.set('content.javascript.enabled', True, 'qute://*/*')
+config.set("content.javascript.enabled", True, "qute://*/*")
 
 # Open new windows in private browsing mode which does not record
 # visited pages.
@@ -164,7 +181,7 @@ c.content.private_browsing = True
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
 # Type: FuzzyUrl
-c.url.default_page = 'https://start.duckduckgo.com/?key=e5997ff7fca49ef9df796d81d1633989af5c073a457df154c84fdaddd96e8595d8f9eafa92aa4b1bf0a015aaa5ce61c2e5e0a65dc889e2bbdc509bd4395a1b91'
+c.url.default_page = "https://start.duckduckgo.com/?key=e5997ff7fca49ef9df796d81d1633989af5c073a457df154c84fdaddd96e8595d8f9eafa92aa4b1bf0a015aaa5ce61c2e5e0a65dc889e2bbdc509bd4395a1b91"
 
 # Search engines which can be used via the address bar.  Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -185,11 +202,17 @@ c.url.default_page = 'https://start.duckduckgo.com/?key=e5997ff7fca49ef9df796d81
 # the search engine name to the search term, e.g. `:open google
 # qutebrowser`.
 # Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.co.uk/search?q={}', 'srx': 'https://searx.downme.xyz/?q={}'}
+c.url.searchengines = {
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "g": "https://google.co.uk/search?q={}",
+    "srx": "https://searx.downme.xyz/?q={}",
+}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = ['https://duckduckgo.com/?key=e5997ff7fca49ef9df796d81d1633989af5c073a457df154c84fdaddd96e8595d8f9eafa92aa4b1bf0a015aaa5ce61c2e5e0a65dc889e2bbdc509bd4395a1b91']
+c.url.start_pages = [
+    "https://duckduckgo.com/?key=e5997ff7fca49ef9df796d81d1633989af5c073a457df154c84fdaddd96e8595d8f9eafa92aa4b1bf0a015aaa5ce61c2e5e0a65dc889e2bbdc509bd4395a1b91"
+]
 
 # Value to use for `prefers-color-scheme:` for websites. The "light"
 # value is only available with QtWebEngine 5.15.2+. On older versions,
@@ -201,7 +224,7 @@ c.url.start_pages = ['https://duckduckgo.com/?key=e5997ff7fca49ef9df796d81d16339
 #   - auto: Use the system-wide color scheme setting.
 #   - light: Force a light theme.
 #   - dark: Force a dark theme.
-c.colors.webpage.preferred_color_scheme = 'dark'
+c.colors.webpage.preferred_color_scheme = "dark"
 
 # Render all web contents using a dark theme. Example configurations
 # from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
@@ -224,7 +247,7 @@ c.colors.webpage.darkmode.enabled = True
 #   - always: Apply dark mode filter to all images.
 #   - never: Never apply dark mode filter to any images.
 #   - smart: Apply dark mode based on image content. Not available with Qt 5.15.0.
-c.colors.webpage.darkmode.policy.images = 'always'
+c.colors.webpage.darkmode.policy.images = "always"
 
 # Which pages to apply dark mode to. The underlying Chromium setting has
 # been removed in QtWebEngine 5.15.3, thus this setting is ignored
@@ -233,54 +256,54 @@ c.colors.webpage.darkmode.policy.images = 'always'
 # Valid values:
 #   - always: Apply dark mode filter to all frames, regardless of content.
 #   - smart: Apply dark mode filter to frames based on background color.
-c.colors.webpage.darkmode.policy.page = 'always'
+c.colors.webpage.darkmode.policy.page = "always"
 
 # Font used in the completion widget.
 # Type: Font
-c.fonts.completion.entry = '8pt monospace'
+c.fonts.completion.entry = "8pt monospace"
 
 # Font used in the completion categories.
 # Type: Font
-c.fonts.completion.category = 'bold 8pt monospace'
+c.fonts.completion.category = "bold 8pt monospace"
 
 # Font used for the debugging console.
 # Type: Font
-c.fonts.debug_console = '8pt monospace'
+c.fonts.debug_console = "8pt monospace"
 
 # Font used for the downloadbar.
 # Type: Font
-c.fonts.downloads = '8pt monospace'
+c.fonts.downloads = "8pt monospace"
 
 # Font used for the hints.
 # Type: Font
-c.fonts.hints = 'bold 8pt monospace'
+c.fonts.hints = "bold 8pt monospace"
 
 # Font used in the keyhint widget.
 # Type: Font
-c.fonts.keyhint = '8pt monospace'
+c.fonts.keyhint = "8pt monospace"
 
 # Font used for error messages.
 # Type: Font
-c.fonts.messages.error = '8pt monospace'
+c.fonts.messages.error = "8pt monospace"
 
 # Font used for info messages.
 # Type: Font
-c.fonts.messages.info = '8pt monospace'
+c.fonts.messages.info = "8pt monospace"
 
 # Font used for warning messages.
 # Type: Font
-c.fonts.messages.warning = '8pt monospace'
+c.fonts.messages.warning = "8pt monospace"
 
 # Font used for prompts.
 # Type: Font
-c.fonts.prompts = '8pt sans-serif'
+c.fonts.prompts = "8pt sans-serif"
 
 # Font used in the statusbar.
 # Type: Font
-c.fonts.statusbar = '8pt monospace'
+c.fonts.statusbar = "8pt monospace"
 
 # Bindings for normal mode
-config.bind('M', 'hint links spawn mpv {hint-url}')
-config.bind('j', 'scroll-px 0 20')
-config.bind('k', 'scroll-px 0 -20')
-config.bind('m', 'spawn mpv {url}')
+config.bind("M", "hint links spawn mpv {hint-url}")
+config.bind("j", "scroll-px 0 40")
+config.bind("k", "scroll-px 0 -40")
+config.bind("m", "spawn mpv {url}")
