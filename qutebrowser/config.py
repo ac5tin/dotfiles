@@ -324,4 +324,5 @@ dracula.draw.blood(c, {"spacing": {"vertical": 6, "horizontal": 8}})
 # setup: https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/qute-bitwarden
 # - install tldextract , pyperclip , bitwarden-cli
 # - bw login
+# - reset session: keyctl purge user bw_session
 config.bind("X", "spawn --userscript qute-bitwarden")
