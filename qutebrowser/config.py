@@ -214,6 +214,10 @@ c.url.start_pages = [
     "https://duckduckgo.com/?key=e5997ff7fca49ef9df796d81d1633989af5c073a457df154c84fdaddd96e8595d8f9eafa92aa4b1bf0a015aaa5ce61c2e5e0a65dc889e2bbdc509bd4395a1b91"
 ]
 
+# Background color of unselected even tabs.
+# Type: QtColor
+c.colors.tabs.even.bg = "darkgrey"
+
 # Value to use for `prefers-color-scheme:` for websites. The "light"
 # value is only available with QtWebEngine 5.15.2+. On older versions,
 # it is the same as "auto". The "auto" value is broken on QtWebEngine
@@ -307,3 +311,17 @@ config.bind("M", "hint links spawn mpv {hint-url}")
 config.bind("j", "scroll-px 0 40")
 config.bind("k", "scroll-px 0 -40")
 config.bind("m", "spawn mpv {url}")
+
+## theme
+import dracula.draw
+
+# Load existing settings made via :set
+config.load_autoconfig()
+
+dracula.draw.blood(c, {"spacing": {"vertical": 6, "horizontal": 8}})
+
+# bitwarden
+# setup: https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/qute-bitwarden
+# - install tldextract , pyperclip , bitwarden-cli
+# - bw login
+config.bind("X", "spawn --userscript qute-bitwarden")
