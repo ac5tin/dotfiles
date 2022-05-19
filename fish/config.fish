@@ -13,6 +13,8 @@ alias othnotes="less ~/MEGA/notes/others.txt"
 
 alias tmux="env TERM=screen-256color tmux"
 alias ls="lsd"
+# get github token
+# - gh_token|xsel -bi
 alias gh_token="bw get item github |jq -r '.fields[]|select(.name == \"token\")|.value'"
 alias jira="jira-terminal"
 
