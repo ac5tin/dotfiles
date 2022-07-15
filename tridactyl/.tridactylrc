@@ -1,0 +1,12 @@
+" General Settings
+set update.lastchecktime 1654149789300
+set configversion 2.0
+
+" Binds
+bind K tabprev
+bind J tabnext
+bind j scrollline 5
+bind k scrollline -5
+
+" For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
+" vim: set filetype=tridactyl
