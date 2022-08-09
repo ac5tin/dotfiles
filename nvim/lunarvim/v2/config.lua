@@ -14,6 +14,8 @@ lvim.log.level = "warn"
 lvim.colorscheme = "tokyonight"
 lvim.lint_on_save = true
 lvim.format_on_save = true
+-- transparency
+lvim.transparent_window = true
 -- vim
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -105,11 +107,13 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
+-- lvim.lsp.automatic_servers_installation = true
+lvim.lsp.installer.setup.automatic_installation = true
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
@@ -182,6 +186,28 @@ lvim.plugins = {
             vim.g.indent_blankline_show_trailing_blankline_indent = false
             vim.g.indent_blankline_show_first_indent_level = false
         end
+    },
+    {
+        "simrat39/rust-tools.nvim",
+        config = function()
+            local lsp_installer_servers = require "nvim-lsp-installer.servers"
+            local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
+            require("rust-tools").setup({
+                tools = {
+                    autoSetHints = true,
+                    hover_with_actions = true,
+                    runnables = {
+                        use_telescope = true,
+                    },
+                },
+                server = {
+                    cmd_env = requested_server._default_options.cmd_env,
+                    on_attach = require("lvim.lsp").common_on_attach,
+                    on_init = require("lvim.lsp").common_on_init,
+                },
+            })
+        end,
+        ft = { "rust", "rs" },
     },
 }
 
