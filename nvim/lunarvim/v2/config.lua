@@ -108,7 +108,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = true
-lvim.lsp.installer.setup.automatic_installation = true
+-- lvim.lsp.installer.setup.automatic_installation = true
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
@@ -138,15 +138,15 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     { command = "black", filetypes = { "python" } },
     { command = "isort", filetypes = { "python" } },
-    {
-        -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-        command = "prettier",
-        ---@usage arguments to pass to the formatter
-        -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-        extra_args = { "--print-with", "100" },
-        ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-        filetypes = { "typescript", "typescriptreact" },
-    },
+    -- {
+    --     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+    --     command = "prettier",
+    --     ---@usage arguments to pass to the formatter
+    --     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    --     extra_args = { "--print-with", "100" },
+    --     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    --     filetypes = { "typescript", "typescriptreact" },
+    -- },
 }
 
 -- -- set additional linters
@@ -231,3 +231,9 @@ lvim.builtin.which_key.mappings["t"] = {
     l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
+
+
+
+-- Tab switch buffer
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
