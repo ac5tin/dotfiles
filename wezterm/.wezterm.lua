@@ -7,6 +7,7 @@ return {
     font_antialias = "Subpixel",
     color_scheme = "Blue Matrix",
     window_background_opacity = 0.8,
+    hide_tab_bar_if_only_one_tab = true,
     keys = {
         {
             key = "x",
@@ -23,6 +24,7 @@ return {
             mods = "CTRL|SHIFT",
             action = wezterm.action({ CopyTo = "ClipboardAndPrimarySelection" }),
         },
+        -- TAB --
         {
             key = "LeftArrow",
             mods = "CTRL|SHIFT",
@@ -32,6 +34,16 @@ return {
             key = "RightArrow",
             mods = "CTRL|SHIFT",
             action = wezterm.action.ActivateTabRelative(1)
+        },
+        {
+            key = "LeftArrow",
+            mods = "CTRL",
+            action = wezterm.action.MoveTabRelative(-1)
+        },
+        {
+            key = "RightArrow",
+            mods = "CTRL",
+            action = wezterm.action.MoveTabRelative(1)
         },
         -- Split pane --
         {
