@@ -192,7 +192,7 @@ lvim.plugins = {
     {
         "simrat39/rust-tools.nvim",
         config = function()
-            require("rust-tools").init {
+            require("rust-tools").setup {
                 tools = {
                     autoSetHints = true,
                     hover_with_actions = true,
