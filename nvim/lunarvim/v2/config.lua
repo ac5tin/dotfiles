@@ -1,5 +1,6 @@
 local dap = require("dap");
 
+
 --[[
 lvim is the global options object
 
@@ -12,15 +13,18 @@ an executable
 
 -- general
 lvim.log.level = "warn"
--- lvim.colorscheme = "onedarker"
+lvim.format_on_save = true
 lvim.colorscheme = "tokyonight"
 lvim.lint_on_save = true
 lvim.format_on_save = true
--- transparency
+-- transparent
 lvim.transparent_window = true
 -- vim
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+-- to disable icons and use a minimalist setup, uncomment the following
+-- lvim.use_icons = false
+
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
@@ -64,28 +68,10 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
---lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-
--- copilot
-
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
-vim.g.copilot_tab_fallback = ""
-local cmp = require "cmp"
-lvim.builtin.cmp.mapping["<C-e>"] = function(fallback)
-    cmp.mapping.abort()
-    local copilot_keys = vim.fn["copilot#Accept"]()
-    if copilot_keys ~= "" then
-        vim.api.nvim_feedkeys(copilot_keys, "i", true)
-    else
-        fallback()
-    end
-end
-
-
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -109,13 +95,11 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = true
--- lvim.lsp.installer.setup.automatic_installation = true
+-- lvim.lsp.automatic_servers_installation = false
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
@@ -140,15 +124,15 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     { command = "black", filetypes = { "python" } },
     { command = "isort", filetypes = { "python" } },
-    -- {
-    --     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-    --     command = "prettier",
-    --     ---@usage arguments to pass to the formatter
-    --     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-    --     extra_args = { "--print-with", "100" },
-    --     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    --     filetypes = { "typescript", "typescriptreact" },
-    -- },
+    {
+        -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+        command = "prettier",
+        ---@usage arguments to pass to the formatter
+        -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+        extra_args = { "--print-with", "100" },
+        ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+        filetypes = { "typescript", "typescriptreact" },
+    },
 }
 
 -- -- set additional linters
@@ -168,6 +152,10 @@ formatters.setup {
 --     filetypes = { "javascript", "python" },
 --   },
 -- }
+
+
+-- rust
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 
 -- Additional Plugins
 lvim.plugins = {
@@ -194,11 +182,36 @@ lvim.plugins = {
         config = function()
             require("rust-tools").setup {
                 tools = {
+                    executor = require("rust-tools/executors").termopen,
+                    reload_workspace_from_cargo_toml = true,
                     autoSetHints = true,
-                    hover_with_actions = true,
+                    -- hover_with_actions = true, -- deprecated
                     runnables = {
                         use_telescope = true,
                     },
+                    inlay_hints = {
+                        auto = true,
+                        only_current_line = false,
+                        show_parameter_hints = false,
+                        parameter_hints_prefix = "<-",
+                        other_hints_prefix = "=>",
+                        max_len_align = false,
+                        max_len_align_padding = 1,
+                        right_align = false,
+                        right_align_padding = 7,
+                        highlight = "Comment",
+                    },
+                    hover_actions = {
+                        border = "rounded",
+                    },
+                    on_initialized = function()
+                        vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+                            pattern = { "*.rs" },
+                            callback = function()
+                                local _, _ = pcall(vim.lsp.codelens.refresh)
+                            end,
+                        })
+                    end,
                 },
                 server = {
                     on_init = require("lvim.lsp").common_on_init,
@@ -210,11 +223,23 @@ lvim.plugins = {
                         -- Code action groups
                         vim.keymap.set("n", "<leader>lA", rt.code_action_group.code_action_group, { buffer = bufnr })
                     end,
+                    capabilities = require("lvim.lsp").common_capabilities(),
+                    settings = {
+                        ["rust-analyzer"] = {
+                            lens = {
+                                enable = true,
+                            },
+                            check = {
+                                enable = true,
+                                command = "clippy",
+                            },
+                        },
+                    }
                 },
             }
         end,
         ft = { "rust", "rs" },
-    },
+    }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -233,6 +258,24 @@ lvim.builtin.which_key.mappings["t"] = {
     l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
+
+
+
+-- copilot
+
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ""
+local cmp = require "cmp"
+lvim.builtin.cmp.mapping["<C-e>"] = function(fallback)
+    cmp.mapping.abort()
+    local copilot_keys = vim.fn["copilot#Accept"]()
+    if copilot_keys ~= "" then
+        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+    else
+        fallback()
+    end
+end
 
 
 
